@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentData>
+   <component>
+      <componentBaseName>Term_Project</componentBaseName>
+      <componentFileName>test.enc</componentFileName>
+      <componentName>Term_Project</componentName>
+      <componentVersion>1.0</componentVersion>
+      <locale/>
+      <numFiles>0</numFiles>
+      <platformList>
+         <platform>win64</platform>
+      </platformList>
+      <releaseFamily>R2016a</releaseFamily>
+      <size>0</size>
+      <type/>
+      <uncompressedBytes>0</uncompressedBytes>
+   </component>
+</componentData>
