@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "task_1-1"
+		},
+		{
+			"path": "task_1-2"
+		},
+		{
+			"path": "task_1-3"
+		},
+		{
+			"path": "task_1-4to6"
+		},
+		{
+			"path": "lib"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"ses_led.h": "c",
+			"io.h": "c"
+		}
+	}
+}
