@@ -8,42 +8,16 @@ import datetime
 import glob
 
 class DataBaseAdministrator():
-
-    name_input_file = "input_optimization.csv"  
-
-    log_file_base_name = "log_file"
-    log_file_base_name_particle = log_file_base_name + "_particle_"
-    log_file_base_name_shape = "log_shape_particle_"
-    file_name_summary = "summary.log"
-    file_data_recorder = "record.log"
-    file_name_time = "time.csv"
-    first_target_value = 0
-
-    def __init__(self, path):
-
-        self.working_directory = path
-
-        logging.debug("DataBaseAdministrator: Set working directory to %s" % self.working_directory)
-
-
-
-        self.read_input_file()
-
-        if self.input_optimization['initial_position_file'] == "automatic":
-
-            num_particles = self.input_optimization['num_particles']
-            parameter_max = self.input_optimization['max_parameters']
-            parameter_min = self.input_optimization['min_parameters']
-            #Generate csv file contains the new initial position and set the file name accordingly
-            self._set_initial_position_file(num_particles, parameter_max, parameter_min)
-            self.name_file_initial_positions = 'initial_positions/automatic_initial_position.csv'
-
-
-        else:
-            self.name_file_initial_positions = self.input_optimization['initial_position_file']
-
-        logging.info("DataBaseAdministrator: Initial position taken from file %s" % self.name_file_initial_positions)
-
+    ''' Code has been omitted due to confidential and ethical reasons
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+     '''
     def create_summary_log(self):
 
         currentDT = datetime.datetime.now()
@@ -189,3 +163,13 @@ class DataBaseAdministrator():
                         self._add_line(self.file_name_summary,index+' prepared for repeated step')
                 logging.info("DataBaseAdministrator: Particle %d has been corrected"%particle.identifier)
 
+    ''' Code has been omitted due to confidential and ethical reasons
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+                                         .
+     '''
