@@ -1,0 +1,267 @@
+
+Keypad.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000f4  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000010  00800060  000000f4  00000168  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000178  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000048  00000000  00000000  000001a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   000001ba  00000000  00000000  000001f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 0000012f  00000000  00000000  000003aa  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   00000130  00000000  00000000  000004d9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000058  00000000  00000000  0000060c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    0000016f  00000000  00000000  00000664  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    0000008e  00000000  00000000  000007d3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000028  00000000  00000000  00000861  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	24 c0       	rjmp	.+72     	; 0x4c <__bad_interrupt>
+   4:	23 c0       	rjmp	.+70     	; 0x4c <__bad_interrupt>
+   6:	22 c0       	rjmp	.+68     	; 0x4c <__bad_interrupt>
+   8:	21 c0       	rjmp	.+66     	; 0x4c <__bad_interrupt>
+   a:	20 c0       	rjmp	.+64     	; 0x4c <__bad_interrupt>
+   c:	1f c0       	rjmp	.+62     	; 0x4c <__bad_interrupt>
+   e:	1e c0       	rjmp	.+60     	; 0x4c <__bad_interrupt>
+  10:	1d c0       	rjmp	.+58     	; 0x4c <__bad_interrupt>
+  12:	1c c0       	rjmp	.+56     	; 0x4c <__bad_interrupt>
+  14:	1b c0       	rjmp	.+54     	; 0x4c <__bad_interrupt>
+  16:	1a c0       	rjmp	.+52     	; 0x4c <__bad_interrupt>
+  18:	19 c0       	rjmp	.+50     	; 0x4c <__bad_interrupt>
+  1a:	18 c0       	rjmp	.+48     	; 0x4c <__bad_interrupt>
+  1c:	17 c0       	rjmp	.+46     	; 0x4c <__bad_interrupt>
+  1e:	16 c0       	rjmp	.+44     	; 0x4c <__bad_interrupt>
+  20:	15 c0       	rjmp	.+42     	; 0x4c <__bad_interrupt>
+  22:	14 c0       	rjmp	.+40     	; 0x4c <__bad_interrupt>
+  24:	13 c0       	rjmp	.+38     	; 0x4c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e4 ef       	ldi	r30, 0xF4	; 244
+  3a:	f0 e0       	ldi	r31, 0x00	; 0
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a0 37       	cpi	r26, 0x70	; 112
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+  48:	50 d0       	rcall	.+160    	; 0xea <main>
+  4a:	52 c0       	rjmp	.+164    	; 0xf0 <_exit>
+
+0000004c <__bad_interrupt>:
+  4c:	d9 cf       	rjmp	.-78     	; 0x0 <__vectors>
+
+0000004e <vKeypadInit>:
+
+void vKeypadInit(void)
+{
+	// input 0 output 0
+	// SET rows as Output, and Lines as Input
+	ROW0_DIR |=(1U<<ROW0);
+  4e:	88 9a       	sbi	0x11, 0	; 17
+	ROW1_DIR |=(1U<<ROW1);
+  50:	89 9a       	sbi	0x11, 1	; 17
+	ROW2_DIR |=(1U<<ROW2);
+  52:	8a 9a       	sbi	0x11, 2	; 17
+	ROW3_DIR |=(1U<<ROW3);
+  54:	8b 9a       	sbi	0x11, 3	; 17
+	// set lines as Input:
+	LINE0_DIR &= ~(1U<<LINE0);
+  56:	8c 98       	cbi	0x11, 4	; 17
+	LINE1_DIR &= ~(1U<<LINE1);
+  58:	8d 98       	cbi	0x11, 5	; 17
+	LINE2_DIR &= ~(1U<<LINE2);
+  5a:	8e 98       	cbi	0x11, 6	; 17
+	LINE3_DIR &= ~(1U<<LINE3);
+  5c:	8f 98       	cbi	0x11, 7	; 17
+	// set lines pull up:
+	LINE0_PULLUP |= (1U<<LINE0);
+  5e:	94 9a       	sbi	0x12, 4	; 18
+	LINE1_PULLUP |= (1U<<LINE1);
+  60:	95 9a       	sbi	0x12, 5	; 18
+	LINE2_PULLUP |= (1U<<LINE2);
+  62:	96 9a       	sbi	0x12, 6	; 18
+	LINE3_PULLUP |= (1U<<LINE3);
+  64:	97 9a       	sbi	0x12, 7	; 18
+	// set rows to no output state (1), when input =1 (pull ups are active) when outputs =1 (no output state)
+	ROW0_DATAOUT |= (1U<<ROW0);
+  66:	90 9a       	sbi	0x12, 0	; 18
+	ROW1_DATAOUT |= (1U<<ROW1);
+  68:	91 9a       	sbi	0x12, 1	; 18
+	ROW2_DATAOUT |= (1U<<ROW2);
+  6a:	92 9a       	sbi	0x12, 2	; 18
+	ROW3_DATAOUT |= (1U<<ROW3);
+  6c:	93 9a       	sbi	0x12, 3	; 18
+  6e:	08 95       	ret
+
+00000070 <ucKeypadScan>:
+unsigned char ucKeypadScan(void)
+{
+	uint8_t line= NO_VALID_INPUT;
+	uint8_t result = NO_VALID_INPUT;
+	uint8_t row=0;
+	for (row=0; row<4; row++)
+  70:	80 e0       	ldi	r24, 0x00	; 0
+	{
+		// loop on rows
+		ROW0_DATAOUT |= (1U<<ROW0);
+  72:	90 9a       	sbi	0x12, 0	; 18
+		ROW1_DATAOUT |= (1U<<ROW1);
+  74:	91 9a       	sbi	0x12, 1	; 18
+		ROW2_DATAOUT |= (1U<<ROW2);
+  76:	92 9a       	sbi	0x12, 2	; 18
+		ROW3_DATAOUT |= (1U<<ROW3);
+  78:	93 9a       	sbi	0x12, 3	; 18
+		// set rows to output state:
+			switch(row)
+  7a:	81 30       	cpi	r24, 0x01	; 1
+  7c:	41 f0       	breq	.+16     	; 0x8e <ucKeypadScan+0x1e>
+  7e:	28 f0       	brcs	.+10     	; 0x8a <ucKeypadScan+0x1a>
+  80:	82 30       	cpi	r24, 0x02	; 2
+  82:	39 f0       	breq	.+14     	; 0x92 <ucKeypadScan+0x22>
+  84:	83 30       	cpi	r24, 0x03	; 3
+  86:	39 f0       	breq	.+14     	; 0x96 <ucKeypadScan+0x26>
+  88:	07 c0       	rjmp	.+14     	; 0x98 <ucKeypadScan+0x28>
+			{
+				case 0:ROW0_DATAOUT &= ~(OUTPUT_STATE<<ROW0); break;
+  8a:	90 98       	cbi	0x12, 0	; 18
+  8c:	05 c0       	rjmp	.+10     	; 0x98 <ucKeypadScan+0x28>
+				case 1:ROW1_DATAOUT &= ~(OUTPUT_STATE<<ROW1); break;
+  8e:	91 98       	cbi	0x12, 1	; 18
+  90:	03 c0       	rjmp	.+6      	; 0x98 <ucKeypadScan+0x28>
+				case 2:ROW2_DATAOUT &= ~(OUTPUT_STATE<<ROW2); break;
+  92:	92 98       	cbi	0x12, 2	; 18
+  94:	01 c0       	rjmp	.+2      	; 0x98 <ucKeypadScan+0x28>
+				case 3:ROW3_DATAOUT &= ~(OUTPUT_STATE<<ROW3); break;
+  96:	93 98       	cbi	0x12, 3	; 18
+				default: break;
+			}
+	// check lines (input)
+			if((LINE0_DATAIN&(1U<<LINE0))==INPUT_STATE)	  {line=0;}
+  98:	84 9b       	sbis	0x10, 4	; 16
+  9a:	15 c0       	rjmp	.+42     	; 0xc6 <ucKeypadScan+0x56>
+			else if((LINE1_DATAIN&(1U<<LINE1))==INPUT_STATE) {line=1;}
+  9c:	85 9b       	sbis	0x10, 5	; 16
+  9e:	15 c0       	rjmp	.+42     	; 0xca <ucKeypadScan+0x5a>
+			else if((LINE2_DATAIN&(1U<<LINE2))==INPUT_STATE) {line=2;}
+  a0:	86 9b       	sbis	0x10, 6	; 16
+  a2:	15 c0       	rjmp	.+42     	; 0xce <ucKeypadScan+0x5e>
+			else if((LINE3_DATAIN&(1U<<LINE3))==INPUT_STATE) {line=3;}
+  a4:	87 9b       	sbis	0x10, 7	; 16
+  a6:	15 c0       	rjmp	.+42     	; 0xd2 <ucKeypadScan+0x62>
+  a8:	09 c0       	rjmp	.+18     	; 0xbc <ucKeypadScan+0x4c>
+			else {/* MISRA */}
+	// if input detected, wait until released:	
+			if (line != NO_VALID_INPUT )
+			{
+			//wait till the input is gone
+			while(INPUT_STILL_THERE == INPUT_STATE );
+  aa:	84 9b       	sbis	0x10, 4	; 16
+  ac:	fe cf       	rjmp	.-4      	; 0xaa <ucKeypadScan+0x3a>
+  ae:	85 9b       	sbis	0x10, 5	; 16
+  b0:	fc cf       	rjmp	.-8      	; 0xaa <ucKeypadScan+0x3a>
+  b2:	86 9b       	sbis	0x10, 6	; 16
+  b4:	fa cf       	rjmp	.-12     	; 0xaa <ucKeypadScan+0x3a>
+  b6:	87 9b       	sbis	0x10, 7	; 16
+  b8:	f8 cf       	rjmp	.-16     	; 0xaa <ucKeypadScan+0x3a>
+  ba:	0d c0       	rjmp	.+26     	; 0xd6 <ucKeypadScan+0x66>
+unsigned char ucKeypadScan(void)
+{
+	uint8_t line= NO_VALID_INPUT;
+	uint8_t result = NO_VALID_INPUT;
+	uint8_t row=0;
+	for (row=0; row<4; row++)
+  bc:	8f 5f       	subi	r24, 0xFF	; 255
+  be:	84 30       	cpi	r24, 0x04	; 4
+  c0:	c1 f6       	brne	.-80     	; 0x72 <ucKeypadScan+0x2>
+		
+}
+unsigned char ucKeypadScan(void)
+{
+	uint8_t line= NO_VALID_INPUT;
+	uint8_t result = NO_VALID_INPUT;
+  c2:	8f ef       	ldi	r24, 0xFF	; 255
+  c4:	08 95       	ret
+				case 2:ROW2_DATAOUT &= ~(OUTPUT_STATE<<ROW2); break;
+				case 3:ROW3_DATAOUT &= ~(OUTPUT_STATE<<ROW3); break;
+				default: break;
+			}
+	// check lines (input)
+			if((LINE0_DATAIN&(1U<<LINE0))==INPUT_STATE)	  {line=0;}
+  c6:	e0 e0       	ldi	r30, 0x00	; 0
+  c8:	f0 cf       	rjmp	.-32     	; 0xaa <ucKeypadScan+0x3a>
+			else if((LINE1_DATAIN&(1U<<LINE1))==INPUT_STATE) {line=1;}
+  ca:	e1 e0       	ldi	r30, 0x01	; 1
+  cc:	ee cf       	rjmp	.-36     	; 0xaa <ucKeypadScan+0x3a>
+			else if((LINE2_DATAIN&(1U<<LINE2))==INPUT_STATE) {line=2;}
+  ce:	e2 e0       	ldi	r30, 0x02	; 2
+  d0:	ec cf       	rjmp	.-40     	; 0xaa <ucKeypadScan+0x3a>
+			else if((LINE3_DATAIN&(1U<<LINE3))==INPUT_STATE) {line=3;}
+  d2:	e3 e0       	ldi	r30, 0x03	; 3
+  d4:	ea cf       	rjmp	.-44     	; 0xaa <ucKeypadScan+0x3a>
+			if (line != NO_VALID_INPUT )
+			{
+			//wait till the input is gone
+			while(INPUT_STILL_THERE == INPUT_STATE );
+			//break from the loop
+			result = g_Keypad_Mapping[row][line];
+  d6:	f0 e0       	ldi	r31, 0x00	; 0
+  d8:	94 e0       	ldi	r25, 0x04	; 4
+  da:	89 9f       	mul	r24, r25
+  dc:	e0 0d       	add	r30, r0
+  de:	f1 1d       	adc	r31, r1
+  e0:	11 24       	eor	r1, r1
+  e2:	e0 5a       	subi	r30, 0xA0	; 160
+  e4:	ff 4f       	sbci	r31, 0xFF	; 255
+  e6:	80 81       	ld	r24, Z
+			}
+		
+
+	}			
+	return result;
+  e8:	08 95       	ret
+
+000000ea <main>:
+
+
+
+int main(void)
+{
+   vKeypadInit();
+  ea:	b1 df       	rcall	.-158    	; 0x4e <vKeypadInit>
+    while(1)
+    {
+        //TODO:: Please write your application code 
+		ucKeypadScan();
+  ec:	c1 df       	rcall	.-126    	; 0x70 <ucKeypadScan>
+  ee:	fe cf       	rjmp	.-4      	; 0xec <main+0x2>
+
+000000f0 <_exit>:
+  f0:	f8 94       	cli
+
+000000f2 <__stop_program>:
+  f2:	ff cf       	rjmp	.-2      	; 0xf2 <__stop_program>

@@ -1,0 +1,179 @@
+
+Timers.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000c6  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000002  00800060  00800060  0000013a  2**0
+                  ALLOC
+  2 .comment      00000030  00000000  00000000  0000013a  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000028  00000000  00000000  0000016a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   000000bf  00000000  00000000  00000192  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 00000083  00000000  00000000  00000251  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   000000c8  00000000  00000000  000002d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000048  00000000  00000000  0000039c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    00000137  00000000  00000000  000003e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000049  00000000  00000000  0000051b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000018  00000000  00000000  00000564  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	46 c0       	rjmp	.+140    	; 0x94 <__vector_3>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a2 36       	cpi	r26, 0x62	; 98
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	02 d0       	rcall	.+4      	; 0x48 <main>
+  44:	3e c0       	rjmp	.+124    	; 0xc2 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <main>:
+volatile uint16_t counter =0 ; // Whenever the flag is raised this function will be called so the counter should remain with the same value
+
+int main(void)
+{
+    
+	DDRD = 0b11100000;
+  48:	80 ee       	ldi	r24, 0xE0	; 224
+  4a:	81 bb       	out	0x11, r24	; 17
+	// set starting position  !!
+	// TIMER mode CTC
+	TCCR2 &= ~(1U<<WGM20);
+  4c:	85 b5       	in	r24, 0x25	; 37
+  4e:	8f 7b       	andi	r24, 0xBF	; 191
+  50:	85 bd       	out	0x25, r24	; 37
+	TCCR2 |= (1U<<WGM21);
+  52:	85 b5       	in	r24, 0x25	; 37
+  54:	88 60       	ori	r24, 0x08	; 8
+  56:	85 bd       	out	0x25, r24	; 37
+	OCR2 = 125; // วาวํ ฟ 
+  58:	8d e7       	ldi	r24, 0x7D	; 125
+  5a:	83 bd       	out	0x23, r24	; 35
+	sei(); // Enable special function register for interrupt
+  5c:	78 94       	sei
+	// Enable interrupt mask (IE) register
+	TIMSK |= (1U<<OCIE2); // This in related to the ISR vector function
+  5e:	89 b7       	in	r24, 0x39	; 57
+  60:	80 68       	ori	r24, 0x80	; 128
+  62:	89 bf       	out	0x39, r24	; 57
+	//Toggle the 3 LEDs every 100 ms !! (F OSC = 8 MHz), Pre-scaller (/8) counts 125 Hint(For 1 MHz, 1 ms = 1000 count, with /8, 1 ms = 125
+	// lAST THING TO enable is the Hardware (I.e timer in this case)
+	TCCR2 &= ~(1U<<CS00);
+  64:	85 b5       	in	r24, 0x25	; 37
+  66:	8e 7f       	andi	r24, 0xFE	; 254
+  68:	85 bd       	out	0x25, r24	; 37
+	TCCR2 |= (1U<<CS01);
+  6a:	85 b5       	in	r24, 0x25	; 37
+  6c:	82 60       	ori	r24, 0x02	; 2
+  6e:	85 bd       	out	0x25, r24	; 37
+	TCCR2 &= ~(1U<<CS02);
+  70:	85 b5       	in	r24, 0x25	; 37
+  72:	8b 7f       	andi	r24, 0xFB	; 251
+  74:	85 bd       	out	0x25, r24	; 37
+	// after prescalling by 8, the max count is 255 while 125 counts = 1 ms ticks.   
+	// timer starts from (256- 125) 
+	while (1)
+	{
+		if (counter == 500)
+  76:	80 91 60 00 	lds	r24, 0x0060
+  7a:	90 91 61 00 	lds	r25, 0x0061
+  7e:	84 3f       	cpi	r24, 0xF4	; 244
+  80:	91 40       	sbci	r25, 0x01	; 1
+  82:	c9 f7       	brne	.-14     	; 0x76 <main+0x2e>
+		{
+			// toggle LEDs and reset timer register
+			counter =0;
+  84:	10 92 61 00 	sts	0x0061, r1
+  88:	10 92 60 00 	sts	0x0060, r1
+			PORTD ^= 0xff;
+  8c:	82 b3       	in	r24, 0x12	; 18
+  8e:	80 95       	com	r24
+  90:	82 bb       	out	0x12, r24	; 18
+  92:	f1 cf       	rjmp	.-30     	; 0x76 <main+0x2e>
+
+00000094 <__vector_3>:
+
+// *********************ISR******** (Interrupt sent request)
+//**Note: If there is any equality checking this should be done in the ISR. 
+
+ISR(TIMER2_COMP_vect) // The code in this function should be small so the whole program does not stop for longer. (least time)
+{
+  94:	1f 92       	push	r1
+  96:	0f 92       	push	r0
+  98:	0f b6       	in	r0, 0x3f	; 63
+  9a:	0f 92       	push	r0
+  9c:	11 24       	eor	r1, r1
+  9e:	8f 93       	push	r24
+  a0:	9f 93       	push	r25
+	
+	// check on timer flag (Automatically done)
+		counter ++;
+  a2:	80 91 60 00 	lds	r24, 0x0060
+  a6:	90 91 61 00 	lds	r25, 0x0061
+  aa:	01 96       	adiw	r24, 0x01	; 1
+  ac:	90 93 61 00 	sts	0x0061, r25
+  b0:	80 93 60 00 	sts	0x0060, r24
+		// reset timer counts to 256 - 125
+		// if raised ++ counter and reset the flag	
+  b4:	9f 91       	pop	r25
+  b6:	8f 91       	pop	r24
+  b8:	0f 90       	pop	r0
+  ba:	0f be       	out	0x3f, r0	; 63
+  bc:	0f 90       	pop	r0
+  be:	1f 90       	pop	r1
+  c0:	18 95       	reti
+
+000000c2 <_exit>:
+  c2:	f8 94       	cli
+
+000000c4 <__stop_program>:
+  c4:	ff cf       	rjmp	.-2      	; 0xc4 <__stop_program>
