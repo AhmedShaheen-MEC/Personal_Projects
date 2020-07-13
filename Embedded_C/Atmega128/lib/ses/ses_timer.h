@@ -11,6 +11,25 @@
 
 /*PROTOTYPES *****************************************************************/
 
+/**
+ * Starts hardware timer 0 with Fast PWM mode
+ */
+void timer0_start();
+
+/** Stop timer0, by reseting the pre-scaler
+ * No need for disabeling the Flag, as it has not been activated
+ */
+void timer0_stop();
+
+/** Start timer 5, with freq. of 5 ms
+ */
+void timer5_start();
+
+/** stop timer 5, by disabling the timer flag
+ *  then, reset timer pre-scaler for energy saving
+ */
+void timer5_stop();
+
 /** software timer function
  * serves as callback
  * toggle a LED each second, using flag counter.

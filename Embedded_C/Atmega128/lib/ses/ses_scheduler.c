@@ -39,7 +39,7 @@ void scheduler_init()
 
 void scheduler_run() 
 {
-	taskDescriptor * task_address;
+	taskDescriptor * task_address = taskList;
 	while (1)
 	{	
 	 	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) 
@@ -129,6 +129,10 @@ void scheduler_remove(taskDescriptor * toRemove)
 		{
 			// set the head to the next task
 			taskList = toRemove->next;
+		}
+		else if (left == NULL) // toRemove variable is not in the list
+		{
+			return; // return and do not change any thing
 		}
 		else
 		{

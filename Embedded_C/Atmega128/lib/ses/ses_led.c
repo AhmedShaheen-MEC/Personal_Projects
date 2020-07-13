@@ -15,12 +15,12 @@
 #define LED_GREEN_PORT 		PORTF
 #define LED_GREEN_PIN       	6
 
-/* FUNCTION DEFINITION *******************************************************/
+/* FUNCTION DEFINITION *******************************************************/ 	
 
 void led_redInit(void) 
 {
- DDR_REGISTER(LED_RED_PORT) |= (1U << LED_RED_PIN);
-
+     DDR_REGISTER(LED_RED_PORT) |= (1U << LED_RED_PIN);
+     led_redOff();
 }
 
 void led_redToggle(void) 
@@ -44,7 +44,8 @@ LED_RED_PORT |= (1U<<LED_RED_PIN);
 void led_yellowInit(void) 
 {
 // TODO
- DDR_REGISTER(LED_YELLOW_PORT) |= (1U << LED_YELLOW_PIN);
+     DDR_REGISTER(LED_YELLOW_PORT) |= (1U << LED_YELLOW_PIN);
+     led_yellowOff();
 }
 
 void led_yellowToggle(void) 
@@ -69,7 +70,8 @@ void led_yellowOff(void)
 void led_greenInit(void) 
 {
 // TODO
- DDR_REGISTER(LED_GREEN_PORT) |= (1U << LED_GREEN_PIN);
+     DDR_REGISTER(LED_GREEN_PORT) |= (1U << LED_GREEN_PIN);
+     led_greenOff();
 }
 
 void led_greenToggle(void)
