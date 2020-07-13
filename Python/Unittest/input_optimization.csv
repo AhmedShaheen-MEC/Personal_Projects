@@ -1,0 +1,23 @@
+num_particles, 2
+num_sub_swarms, 1
+max_steps, 2
+inertia, 0.8
+social_factor, 2
+cognitive_factor, 2
+threshold_craziness, 0.95
+num_cpus, 1
+impact_energy, 3500e3
+element_size_components, 0.05
+element_size_contact_surface, 0.05
+mass_impact_weight_max, 350e3 
+mass_anvil_max, 200e3 
+efficiency_min, 0.8 
+max_stress_max, 1e9
+v_peak_min, -2.7
+parameterization, hull_iw_12_a_5
+initial_position_file, automatic
+num_parameters, 17
+min_parameters, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1
+max_parameters, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 1, 4, 4, 1, 1
+time_impact_simulation, 5e-4
+time_propagation_simulation, 1e-5
