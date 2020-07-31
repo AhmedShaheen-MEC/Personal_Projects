@@ -3,8 +3,28 @@ import os
 import sys
 import csv
 import glob
-import math
 import datetime
+import time
+import numpy
+import shutil
+import logging
+import math
+
+# Import abaqus modules
+
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
 
 ''' ***** Set up path***** '''
 '''
@@ -20,12 +40,13 @@ path_classes = path + "/classes"
 path_modules = path + "/modules"
 path_templates = path + "/templates"
 path_unit_test = path + "/unit_tests"
+path_parameterization = path_classes + "/parameterization_package"
 sys.path.append(path_unit_test)
 sys.path.append(path)
 sys.path.append(path_classes)
 sys.path.append(path_modules)
 sys.path.append(path_templates)
-
+sys.path.append(path_parameterization)
 ''' 
     The mock module is included manually, inside the test directory
     this was done to avoid changing Abaqus internal data. 
@@ -41,9 +62,14 @@ os.chdir(path)
 
 from mock import patch, Mock
 
-''' ***** Import test module *****'''
+''' ***** Import test modules *****'''
 from database import DataBaseAdministrator, DataPostprocessor
-from pso import OptimizationManager, SubSwarm
+from pso import OptimizationManager, SubSwarm, Particle
+
+''' ***** Import Abaqus  test modules *****'''
+from minimal import  HammerComponent, Anvil, ImpactWeight
+from connect_simulation import AbaqusSolverConnector, AbaqusOutput
+from modelling import AbaqusImpactModel, AbaqusPropagationModel
 
 '''VIP: class decorator should be passed to all the defined function ! '''
 ''' **** Mock not relevant modules **** '''
@@ -98,7 +124,7 @@ class TestDataBaseAdministrator(unittest.TestCase):
         self.assertEqual(self.dbTestObject.input_optimization["max_stress_max"], 1e9)
         self.assertEqual(self.dbTestObject.input_optimization["v_peak_min"], -2.7)
         self.assertEqual(self.dbTestObject.input_optimization["parameterization"], "hull_iw_12_a_5")
-        self.assertEqual(self.dbTestObject.input_optimization["initial_position_file"], "automatic")
+        self.assertEqual(self.dbTestObject.input_optimization["initial_position_file"], "initial_position_iw_12_a_5_p_15_test.csv")
         self.assertEqual(self.dbTestObject.input_optimization["num_parameters"], 17)
         self.assertEqual(self.dbTestObject.input_optimization["min_parameters"], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1])
         self.assertEqual(self.dbTestObject.input_optimization["max_parameters"], [2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 1, 4, 4, 1, 1])
@@ -111,7 +137,7 @@ class TestDataBaseAdministrator(unittest.TestCase):
         max_values = [2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 1, 4, 4, 1, 1]
         min_values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]
         self.dbTestObject._set_initial_position_file(num_particles,max_values, min_values)
-        with open('initial_positions/automatic_initial_position.csv', 'r') as position_file:
+        with open('initial_positions/initial_position_iw_12_a_5_p_15_test.csv', 'r') as position_file:
             position_file = csv.reader(position_file)
             for line in position_file:
                 for p in range(0,len(max_values)):
@@ -119,6 +145,7 @@ class TestDataBaseAdministrator(unittest.TestCase):
                     self.assertLessEqual(float(line[p]),max_values[p])
 
     def test_read_initial_position(self, mock_OptimizationManager,mock_Particle):
+
         actual_initial_values=[[0.52,13.92,1.88,2.4,1.7,3.68,1.94,2.4,0.36,12.64,1.84,8.16,0.59,2.72,0.68,0.4,0.02],
                                [0.7,1.12,0.1,7.2,0.62,1.28,0.94,15.84,1.08,7.04,0.04,11.52,0.96,3.24,2,0.31,0.8]]
         initial_position_path = '/initial_positions/initial_position_iw_12_a_5_p_15_test.csv'
@@ -447,7 +474,7 @@ class TestOptimizationManager(unittest.TestCase):
         particle_2 = Mock()
         swarm.particles = [particle_0, particle_1, particle_2]
         return_value = self.opt_manager_object.reorganize_swarm(swarm)
-        ''' Check wether the return object is the same as the passed '''
+        ''' Check whether the return object is the same as the passed '''
         self.assertEqual(return_value , swarm)
 
     ''' The initialize_swarm has been neglected, as it deals with objects which will be mocked in
@@ -464,6 +491,7 @@ class TestOptimizationManager(unittest.TestCase):
         self.assertTrue(self.opt_manager_object.convergence)
 
     def test_set_best_position(self, mock_DataBaseAdministrator):
+
         ''' Ceate 3 object of type particel and set their Target Value:'''
         particle_0 = Mock()
         particle_1 = Mock()
@@ -488,18 +516,23 @@ class TestOptimizationManager(unittest.TestCase):
 
     ''' 
         The method "check_for_convergence" has been neglected due to the following:
-        If I want to test it, I would patch 4 methods and check wether they
+        If I want to test it, I would patch 4 methods and check whether they
         have been called in the write context or not, and its very
         simple for that.
     '''
-    # def test_save_time(self, mock_DataBaseAdministrator):
-    #
-    #     time_particle_start = 2
-    #     time_particle_end = 3
-    #     identifier = 1
-    #     self.opt_manager_object.save_time(identifier,time_particle_start,time_particle_end)
-    #
-    #     self.assertEqual(self.opt_manager_object.delta_time_all_particles[identifier], ??)
+    def test_save_time(self, mock_DataBaseAdministrator):
+
+        delta_time = 2.0 #2 seconds
+        self.opt_manager_object.delta_time_all_particles = range(0,3)
+        time_particle_start = datetime.datetime.now()
+        time.sleep(delta_time)
+        time_particle_end = datetime.datetime.now()
+        expected_resutle = (round((2.0/60),2))
+
+        identifier = 1
+        self.opt_manager_object.save_time(identifier,time_particle_start,time_particle_end)
+
+        self.assertEqual(self.opt_manager_object.delta_time_all_particles[identifier], expected_resutle)
 
     def test_write_summary(self, mock_DataBaseAdministrator):
 
@@ -621,12 +654,392 @@ class TestSubSwarm(unittest.TestCase):
         self.sub_swarm_test_object.set_best_position()
         self.assertEqual(self.sub_swarm_test_object.best_position_current_step, self.particles[0].position)
 
+class TestParticle(unittest.TestCase):
 
-if __name__ == '__main__':
+    @classmethod
+    def setUpClass(cls):
 
-    with open(path + '/test_results.log', "w") as f:
-        runner = unittest.TextTestRunner(f)
-        unittest.main(testRunner=runner)
+        cls.parameterization = Mock()
+        cls.parameterization.anvil = Mock()
+        cls.parameterization.ImpactWeight = Mock()
+        identifire = 0
+
+        penalty_test_factors ={ 'mass': 100, 'stress':100, 'velocity':100, 'efficiency':100}
+        penalty_test_type = {'mass':2,'stress':2,'velocity':2,'efficiency':2}
+
+        key_words = ['num_parameters', 'inertia', 'social_factor', 'cognitive_factor', 'min_parameters',
+                     'max_parameters', 'threshold_craziness', 'mass_impact_weight_max', 'mass_anvil_max',
+                     'efficiency_min', 'max_stress_max', 'v_peak_min', 'penalties_type', 'penalty_factor_mass',
+                     'penalty_factor_stress', 'penalty_factor_velocity', 'penalty_factor_efficiency']
+        cls.corresponding_values = [17, 0.8, 2, 2, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+                                [2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 1, 4, 4, 1, 1], 0.95, 350e3,
+                                200e3, 0.8, 1e9, -2.7, 'quadratic', 100,100,100,100]
+        cls.initial_positon_particle_0 = [0.571, 1.744, 0.167, 4.095,
+                                      0.616, 12.078, 0.808,13.282,
+                                      1.641, 11.204, 0.512, 1.824,
+                                      0.932, 1.842,2.702, 0.461, -0.339]
+        with patch('database.DataBaseAdministrator', autospec= True) as mock_databaseAdmin:
+
+            mock_databaseAdmin.input_optimization = {}
+            index = 0
+            for word in key_words:
+                mock_databaseAdmin.input_optimization[word] = cls.corresponding_values[index]
+                index += 1
+            mock_databaseAdmin.read_initial_position.return_value = cls.initial_positon_particle_0
 
 
+            cls.parameterization.anvil.generate_component.return_value = mock_databaseAdmin.read_initial_position
+            cls.parameterization.ImpactWeight.generate_component.return_value = mock_databaseAdmin.read_initial_position
+            cls.reference_velocity =[0.3*(a-b) for a, b in zip(mock_databaseAdmin.input_optimization['max_parameters'],
+                                                           mock_databaseAdmin.input_optimization['min_parameters'])]
+
+            cls.particleTestOb = Particle(identifire,cls.parameterization,mock_databaseAdmin)
+            cls.particleTestOb.penalty_dict = {'types': penalty_test_type, 'factors': penalty_test_factors}
+
+    ''' This method tests 4 methods; set_optimization_info, initialize_position,
+        _renew_components, and _set_reference_velocity as they all called in the initialization,
+        therefore they tested in one shot
+    '''
+    def test_initialized_attributes(self):
+
+        # Create a temp. test instance
+        self.particleTestOb.test_attributes = [self.particleTestOb.num_points, self.particleTestOb.w,self.particleTestOb.c1,
+                                               self.particleTestOb.c2,self.particleTestOb.parameter_min, self.particleTestOb.parameter_max,
+                                               self.particleTestOb.threshold_craziness,self.particleTestOb.mass_impact_weight_max,
+                                               self.particleTestOb.mass_anvil_max, self.particleTestOb.efficiency_min,
+                                               self.particleTestOb.max_stress_max, self.particleTestOb.v_peak_min]
+        index = 0
+        for i in range(0, len(self.particleTestOb.test_attributes)):
+            self.assertEqual(self.particleTestOb.test_attributes[index], self.corresponding_values[index])
+            index += 1
+
+        self.assertEqual(self.particleTestOb.position, [0.571, 1.744, 0.167, 4.095,
+                                      0.616, 12.078, 0.808,13.282,
+                                      1.641, 11.204, 0.512, 1.824,
+                                      0.932, 1.842,2.702, 0.461, -0.339])
+        self.assertEqual(self.particleTestOb.velocity, [0 for p in range(0, self.corresponding_values[0])])
+        self.assertEqual(self.particleTestOb.reference_velocity, self.reference_velocity)
+
+        self.parameterization.anvil.assrt_called_with(self.initial_positon_particle_0)
+        self.parameterization.ImpactWeight.assrt_called_with(self.initial_positon_particle_0)
+
+        '''
+            Clean test environment, remove test attributes, they are already
+            saved correctly in the test object since they passed the test.
+        '''
+        delattr(self.particleTestOb, 'test_attributes')
+        delattr(self.__class__, 'parameterization')
+        delattr(self.__class__, 'initial_positon_particle_0')
+
+    def test__set_penalty_type(self):
+
+        type = 'quadratic'
+        order = self.particleTestOb._set_penalty_type(type)
+        self.assertEqual(order,2)
+
+    def test_set_best_target_value(self):
+
+
+        # Check the values when the condition is False.
+        self.particleTestOb.target_value = test_t_v = 2e3
+
+        self.particleTestOb.set_best_target_value()
+        self.assertEqual(self.particleTestOb.best_position, self.particleTestOb.best_position )
+        self.assertEqual(self.particleTestOb.best_target_value, self.particleTestOb.best_target_value )
+
+        # Check the values when the condition is true.
+        self.particleTestOb.target_value = test_t_v = 300
+        self.particleTestOb.position = [0.53, 13.55, 1.83, 2.54, 1.67,
+                                        3.61, 1.91, 2.79, 0.38, 12.48,
+                                        1.79, 8.26, 0.6, 2.73, 0.72, 0.4, 0.04]
+
+        self.particleTestOb.set_best_target_value()
+        self.assertEqual(self.particleTestOb.best_position, self.particleTestOb.position)
+        self.assertEqual(self.particleTestOb.best_target_value, test_t_v)
+
+    def test_set_target_value_test(self):
+
+        test_t_v = 200
+        self.particleTestOb.set_target_value_test(test_t_v)
+        self.assertEqual(self.particleTestOb.target_value, test_t_v)
+
+    def test__calculate_penalty(self):
+
+        penalty_value = 0
+        current_value = 200
+        max_value = 300
+        property = 'mass'
+        ''' Result = 0 + (abs(200-300)/300)^2 *100'''
+        expected_value = 11.11
+        return_calculated_penalty = self.particleTestOb._calculate_penalty(penalty_value,current_value,
+                                                                           max_value, property)
+        self.assertEqual(round(return_calculated_penalty,2) , expected_value)
+
+    def test__set_penalties(self):
+
+        #Initialize the attributes that should be used inside the function:
+
+        self.particleTestOb.penalty_v = 0
+        self.particleTestOb.mass_anvil = 300e3
+        self.particleTestOb.efficiency = 0.7
+        self.particleTestOb.penalty_mass = 0
+        self.particleTestOb.penalty_stress = 0
+        self.particleTestOb.max_stress_anvil = 3e6
+        self.particleTestOb.mass_impact_weight = 200e3
+        self.particleTestOb.peak_pile_head_velocity = -2.5
+        self.particleTestOb.max_stress_impact_weight = 2e9
+        '''
+            Expected results: Order = 2, penalty factors = 100, calculated manually! 
+        '''
+        Penalty_mass =  25 # 0 (I.W) , 25 (A)
+        Penalty_stress = 100 # 100, 0
+        Penalty_velocity = 0.55
+        Penalty_efficiency = 1.56
+        Penalties_sum = 127.11
+
+        self.particleTestOb._set_penalties()
+
+        self.assertEqual(round(self.particleTestOb.penalty_mass,2), Penalty_mass)
+        self.assertEqual(round(self.particleTestOb.penalty_stress,2), Penalty_stress)
+        self.assertEqual(round(self.particleTestOb.penalty_v,2), Penalty_velocity)
+        self.assertEqual(round(self.particleTestOb.penalty_efficiency,2), Penalty_efficiency)
+
+        self.assertEqual(round(self.particleTestOb.sum_penalties,2), Penalties_sum)
+
+    def test_move(self):
+
+        '''
+            1. Fix the randomly generated number to verify the test.
+            2. Test all conditions, and notice the changes.
+        '''
+        with patch('pso.random') as mock_random:
+
+            # Case 1:
+            mock_random.random.return_value = 2 # craziness < threshold_craziness (true)
+            expected_position = [1.77, 11.34, 1.37, 13.7, 1.82, 16.0, 2.0, 16.0, 2.0, 16.0, 1.71, 11.42, 1.0, 4.0, 4.0, 1.0,0.86]
+            expected_velocity = [1.2, 9.6, 1.2, 9.6, 1.2, 3.92, 1.19, 2.72, 0.36, 4.8, 1.2, 9.6, 0.07, 2.16, 1.3, 0.54, 1.2]
+            best_position_current_step = [200 for i in range(0,self.particleTestOb.num_points)]
+            self.particleTestOb.move(best_position_current_step)
+            self.assertEqual(self.particleTestOb.position, expected_position)
+            self.assertEqual(self.particleTestOb.velocity, expected_velocity)
+
+            # Case 2:
+            mock_random.random.return_value = 0.8 # craziness < threshold_craziness (false)
+            # Case 2.1:
+            expected_position = [2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 1.0, 4.0, 4.0, 1.0,1.0]
+            expected_velocity = [0.23, 4.66, 0.63, 2.3, 0.18, 0.0, 0.0, 0.0, 0.0, 0.0, 0.29, 4.58, 0.0, 0.0, 0.0, 0.0, 0.14]
+            self.particleTestOb.target_value = float('nan') # isnan condition (true)
+            self.particleTestOb.move(best_position_current_step)
+            self.assertEqual(self.particleTestOb.position, expected_position)
+            self.assertEqual(self.particleTestOb.velocity, expected_velocity)
+            # Case 2.2:
+            expected_position = [2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 2.0, 16.0, 1.0, 4.0, 4.0, 1.0, 1.0]
+            expected_velocity = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            self.particleTestOb.target_value = 180          # isnan condition (false)
+            self.particleTestOb.move(best_position_current_step)
+            self.assertEqual(self.particleTestOb.position, expected_position)
+            self.assertEqual(self.particleTestOb.velocity, expected_velocity)
+
+    def test__get_valid_velocity(self):
+
+        new_position = [-0.17, 12.43, 1.73, -4.66, 1.05, 2.33,
+                        0.97, -13.05, -0.7, 5.44, 1.75, -3.26,
+                        -0.36, -0.51, -1.28, 0.09, -0.76]
+        new_velocity = [0.53, 13.55, 1.83, 2.54, 1.67, 3.61,
+                        1.91, 2.79, 0.38, 12.48, 1.79, 8.26,
+                        0.6, 2.73, 0.72, 0.4, 0.04]
+        ''' 
+            Result: compare each element in the new position with its min and max value
+            and adjust the results accordingly 
+        '''
+        return_corrected_velocity = self.particleTestOb._get_valid_velocity(new_velocity, new_position)
+        expected_result = [0.7, 13.55, 1.83, 7.2, 1.67, 3.61,
+                           1.91, 15.84, 1.08, 12.48, 1.79, 11.52,
+                           0.96, 3.24, 2.0, 0.4, 0.04]
+        self.assertEqual(return_corrected_velocity, expected_result)
+
+
+
+'''  
+    In the following test: the ImpactWeight and Anvil, since they are childs of the HammerComponent class
+    and the HammerComponent class is child of AbaqusSolverConnector, both will be tested at once 
+    The Pile class dose not have any methods so testing it will not have any benefits
+    Testing will be done through the minimal parameterization.  
+    * Note: the test module sorts the test classes alphabetically, the 0x0 numbering is used to keep the order.
+'''
+class Test010Minimal_Inheritance(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+
+        cls.anvil_test_ob = Anvil('anvil')
+        cls.iw_test_ob = ImpactWeight('impact_weight')
+        parameters = [2,3,1] #minimal parameters: iw width, iw height, anvil height
+        cls.anvil_test_ob._set_coordinates(parameters)
+        cls.iw_test_ob._set_coordinates(parameters)
+
+    ''' The sketch_part method was ignored as it requires some visualization to check the sketch itself'''
+    ''' Unittest tends to sort the test methods, this 0x0 naming to prevent that in this particular test'''
+    def test_010_set_height(self):
+
+        # test the coordinates set by _set_coordinates first "Implicit test"
+
+        anvil_x                       = [[0, 3.5, 3.5, 0]]
+        anvil_y                       = [[0, 0, 1, 1]]
+        iw_x                          = [[0, 2, 2, 0]]
+        iw_y                          = [[0, 0.1, 3, 3]]
+        anvil_height                  = 1
+        iw_height                     = 3
+        anvil_height_at_symmetry_line = 1
+        iw_height_at_symmetry_line    = 3
+        self.assertEqual(self.anvil_test_ob.y, anvil_y)
+        self.assertEqual(self.anvil_test_ob.x, anvil_x)
+        self.assertEqual(self.iw_test_ob.y, iw_y)
+        self.assertEqual(self.iw_test_ob.x, iw_x)
+
+        self.iw_test_ob._set_height()
+        self.anvil_test_ob._set_height()
+
+        self.assertEqual(self.anvil_test_ob.height, anvil_height)
+        self.assertEqual(self.anvil_test_ob.height_at_symmetry_line,anvil_height_at_symmetry_line)
+        self.assertEqual(self.iw_test_ob.height, iw_height)
+        self.assertEqual(self.iw_test_ob.height_at_symmetry_line, iw_height_at_symmetry_line)
+
+    def test_020_close_shape(self):
+
+        anvil_x_closed = [[0, 3.5, 3.5, 0, 0]]
+        anvil_y_closed = [[0, 0, 1, 1, 0]]
+        iw_x_closed    = [[0, 2, 2, 0]]
+        iw_y_closed    = [[0, 0.1, 3, 3]]
+        self.anvil_test_ob._close_shape()
+        self.assertEqual(self.anvil_test_ob.x, anvil_x_closed)
+        self.assertEqual(self.anvil_test_ob.y, anvil_y_closed)
+        self.assertEqual(self.iw_test_ob.x, iw_x_closed)
+        self.assertEqual(self.iw_test_ob.y, iw_y_closed)
+
+    ''' The method generate_component has been neglected, as it only calls other functions.'''
+
+''' 
+    This class calls all it's methods inside the init method therefore, the test will be done by checking the attributes
+    rather executing the functions, (i.e. Already called during the initialization).
+'''
+class Test020AbaqusImpactModel(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+
+
+
+        #Prepare class constructors:
+        element_size_components      = 0.05
+        element_size_contact_surface = 0.05
+        impact_energy                = 3500e3
+        time_impact_simulation       = 5e-4
+        parameters                   = [2, 3, 1]
+        # prepare models
+        mdb.Model(name='impact', objectToCopy=mdb.models['Model-1'])
+        test_impact_model = mdb.models['impact']
+        cls.anvil_test_ob = Anvil('anvil')
+        cls.anvil_test_ob.generate_component(parameters)
+        cls.iw_test_ob = ImpactWeight('impact_weight')
+        cls.iw_test_ob.generate_component(parameters)
+
+        cls.modelling_test_ob = AbaqusImpactModel(test_impact_model, cls.anvil_test_ob, cls.iw_test_ob,
+                                                  time_impact_simulation, impact_energy, element_size_components,
+                                                  element_size_contact_surface)
+
+    ''' 
+        The class "AbaqusImpactModel" will be tested, instead of mocking all the class
+        which will result in a unrealistic test and a bunch of mocking object, 
+        a test model has been set and performed by Abaqus, and the result of the model(i.e. attributes) has been tested afterwords. 
+        The model is based on the minimal parameterization
+        
+        (*Note: the minimal module has been tested and verified before!) 
+    '''
+    def test_all_attributes(self):
+
+            area_anvil = 1 * 3.5 # as set in the initialization "Rectangular"
+            centroid_anvil = [1.75, 0.5, 0] # X,Y,Z
+            area_iw = (2*3) - (0.1 *0.5 * 2) #5.9 Rectangular - Small triangle
+            centroid_iw = [0.994350254535675, 1.52485871315002, 0.0] # X,Y,Z
+            rho = 7850 # Material density?
+            anvil_mass = round(2*3.14159265359*centroid_anvil[0]*area_anvil*rho ,2)
+            iw_mass = round(2*3.14159265359*centroid_iw[0]*area_iw*rho, 2)
+            # Pile dimensions as declared in the parts module
+            inner_radius = round((3.25 - 0.08),2)
+            outer_radius = round(3.25,2)
+            length = 70
+            ''' Velocity = Square root(2*KE/(mass))'''
+            iw_velocity = round((math.sqrt((2*self.modelling_test_ob.impact_energy) / iw_mass)),2)
+
+
+            self.assertEqual(round(self.modelling_test_ob.mass_anvil,2), anvil_mass)
+            self.assertEqual(round(self.modelling_test_ob.mass_impact_weight,2), iw_mass)
+            self.assertEqual(round(self.modelling_test_ob.pile.outer_radius,2), outer_radius)
+            self.assertEqual(round(self.modelling_test_ob.pile.inner_radius,2) , inner_radius)
+            self.assertEqual(round(self.modelling_test_ob.pile.length,2), length)
+            self.assertEqual(round(self.modelling_test_ob.velocity_impact_weight,2) , iw_velocity,)
+
+''' 
+    Class AbaqusPropagationModel modify the temp. input file, it has only one function
+    called in the initialization, therefore one test is required, scince it deals with files
+    so, the test is done through modifying the file with previously know values, and check
+    whether the new file in correct or not
+'''
+class Test030AbaqusPropagationModel(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+
+        os.chdir(path_unit_test)
+        # Since the class does not interface with Abaqus classes, mocking objects used
+        mdb = Mock()
+        cls.abaqusOutput = Mock()
+        cls.abaqusOutput.time_impact = [0.00000000e+00,   1.01569558e-05,   2.06521709e-05,   3.11265685e-05,\
+                                        4.00962163e-05,   5.05549651e-05,   6.10096249e-05,   7.14613634e-05,\
+                                        8.04187366e-05,   9.08670045e-05,   1.01314654e-04,   1.10268709e-04]
+
+        cls.abaqusOutput.pile_head_velocity = [ 0.00000000e+00,  1.05195741e-05,   2.11863135e-05,   3.07858500e-05,\
+                                                4.03773229e-05,  5.18803827e-05,   6.14620731e-05,   7.10407185e-05,\
+                                                8.06168246e-05,  9.01907915e-05,   1.01677229e-04,   1.11247602e-04]
+        cls.simulation_time = 5e-4
+        cls.prop_test_obj = AbaqusPropagationModel(mdb, cls.abaqusOutput, cls.simulation_time)
+
+    @classmethod
+    def tearDownClass(cls):
+
+        # Clear test directory after the test was done
+        [os.remove(file) for file in glob.glob("*.inp")]
+
+    def test_propagation_model_parameters(self):
+
+        found_amplitude = False
+        found_dynamic = False
+        amplitude = []
+        dynamic = 0
+        line_values = []
+        test_file = open('acousticModel_30m_100ms.inp','r')
+        test_file = test_file.readlines()
+        combined_list = []
+        for line in test_file:
+
+            if line.startswith('*Dynamic'):
+                found_amplitude = False
+                found_dynamic = True
+            elif line.startswith('*Amplitude'):
+                found_amplitude = True
+                found_dynamic = False
+            elif found_amplitude:
+                line_values = line.strip().split(',')
+                for value in line_values:
+                    amplitude.append(value)
+            elif found_dynamic:
+                dynamic = line.split(',')[1]
+
+        for i in range(len(self.abaqusOutput.time_impact)):
+            combined_list.append(str(self.abaqusOutput.time_impact[i]))
+            combined_list.append(str(self.abaqusOutput.pile_head_velocity[i]))
+
+        self.assertEqual(float(dynamic), float(self.simulation_time))
+        self.assertEqual(amplitude, combined_list)
 
