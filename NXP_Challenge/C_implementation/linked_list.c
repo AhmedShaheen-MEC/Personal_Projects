@@ -74,6 +74,12 @@ int compare_string(tstr_node **head , tstr_node *pstr_node)
 			current_node= current_node->next;
 			continue;
 		}
+		// the entered node is not larger the next
+		// check if they are identical
+		if (pstr_node == current_node)
+		{
+			return -1;
+		}
 		//place the string just before the larger string
 		pstr_node->next = current_node;
 		//If the next was the head, rearrange the addresses

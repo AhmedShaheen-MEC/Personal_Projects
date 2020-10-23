@@ -100,3 +100,7 @@ class Test01LinkedList(unittest.TestCase):
 
         temp = None
         self.assertEqual(self.stringList.sorted_list_insert(temp), -1)
+
+    def test_add_twice(self):
+
+        self.assertEqual(self.stringList.sorted_list_insert(self.stringList.head), -1)

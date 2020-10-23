@@ -24,7 +24,6 @@ class LinkedList:
             return -1
         # Check if the list was empty
         if self.head is None:
-
             self.head = node
             node.next = None
             return 0
@@ -38,13 +37,18 @@ class LinkedList:
                 prev = current_node
                 current_node = current_node.next
                 continue
+            '''
+                if the entered node is not larger than the next node
+                check if both are identical!, if so do nothing!
+            '''
+            if node == current_node:
+                print("Warning - Linked list insert: node already added..!\n")
+                return -1
             node.next = current_node
             # if the entered node has the smallest value
             if node.next == self.head:
                 # switch the head node
-                temp = self.head
-                self.head = node
-                self.head.next = temp
+                self.head, self.head.next = node, node.next
                 return 0
             prev.next = node
             return 0

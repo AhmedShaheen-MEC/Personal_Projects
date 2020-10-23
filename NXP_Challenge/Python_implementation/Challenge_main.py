@@ -8,7 +8,7 @@ if __name__ == '__main__':
     s2 = Node("aBc")
     s3 = Node("ABC")
     # Prepare a test object
-    sTest = Node("abc")
+    sTest = Node("afe")
     # Prepare the list
     stringList.sorted_list_insert(s1)
     stringList.sorted_list_insert(s2)
@@ -20,5 +20,6 @@ if __name__ == '__main__':
     # Display the list again
     stringList.print_list()
     # Remove a certain node
-    stringList.sorted_list_remove(sTest)
+    stringList.sorted_list_remove(s1)
     stringList.print_list()
+

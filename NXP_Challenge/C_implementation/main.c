@@ -304,6 +304,40 @@ int test_sorting_order(){
 	return 0;
 }
 
+int test_add_twice(){
+
+	// Prepare a test set
+	tstr_node* head = NULL;
+	tstr_node ** ptr_head = &head;
+	tstr_node *s1,*s2, *s3;
+
+	s1 = (tstr_node*)malloc(sizeof(tstr_node));
+	s2 = (tstr_node*)malloc(sizeof(tstr_node));
+	s3 = (tstr_node*)malloc(sizeof(tstr_node));
+
+
+	// Provide each node with a certain string
+	strcpy(s1->data,"ABC");
+	strcpy(s2->data,"EFG");
+	strcpy(s3->data,"HIJ");
+
+	// Insert initial  nodes
+	sorted_list_insert(ptr_head,s1);
+	sorted_list_insert(ptr_head,s2);
+	sorted_list_insert(ptr_head,s3);
+
+	printf("\n-----------------------------\n");
+	if (sorted_list_insert(ptr_head,s1) == -1){
+		return 0;
+	}
+	display_list(ptr_head);
+
+	free(s1);
+	free(s2);
+	free(s3);
+
+	return -1;
+}
 
 int main(void) {
 
@@ -315,5 +349,6 @@ int main(void) {
 	printf("Remove null pointer test: %d", test_remove_null());
 	printf("Remove not in the list test: %d", test_remove_not_in_the_list());
 	printf("Sorting order test %d", test_sorting_order());
+	printf("Add the same node twice test: %d", test_add_twice());
 	return 0;
 }
