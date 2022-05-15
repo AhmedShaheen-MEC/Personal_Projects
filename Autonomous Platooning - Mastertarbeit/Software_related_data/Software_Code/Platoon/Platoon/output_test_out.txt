@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "C:\Users\Kimo Store\.platformio\python3\lib\runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "C:\Users\Kimo Store\.platformio\python3\lib\runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "C:\Users\Kimo Store\.platformio\penv\Scripts\platformio.exe\__main__.py", line 4, in <module>
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\platformio\__main__.py", line 21, in <module>
+    from platformio import __version__, exception, maintenance, util
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\platformio\maintenance.py", line 22, in <module>
+    from platformio import __version__, app, exception, fs, telemetry
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\platformio\telemetry.py", line 27, in <module>
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\requests\__init__.py", line 44, in <module>
+    import chardet
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\chardet\__init__.py", line 19, in <module>
+    from .universaldetector import UniversalDetector
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\chardet\universaldetector.py", line 48, in <module>
+    from .sbcsgroupprober import SBCSGroupProber
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\chardet\sbcsgroupprober.py", line 31, in <module>
+    from .langbulgarianmodel import (ISO_8859_5_BULGARIAN_MODEL,
+  File "c:\users\kimo store\.platformio\penv\lib\site-packages\chardet\langbulgarianmodel.py", line 4, in <module>
+    from chardet.sbcharsetprober import SingleByteCharSetModel
+  File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+
+^C

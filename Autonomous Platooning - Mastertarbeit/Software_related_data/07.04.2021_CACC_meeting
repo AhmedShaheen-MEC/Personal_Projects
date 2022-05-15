@@ -1,0 +1,100 @@
+Meeting agenda:
+	1. Discuss next period work as showen below.
+	2. Review US averaging algorithm.
+	3. Decied on the next steps. 
+	4. Decied on Final presentation date.
+========================================
+Completed tasks so far:
+	1. Implement most of the required software code for the 3 vehicles.
+	2. Impelemnt a method for calculating relative speed and acceleration based on spacing error and test it.
+	3. Test communication schems for 3 MCUs usign ESP-NOW protocol
+	4. Write the scheduling algorithm. 
+	5. Spenst sometime trying to varify the IR sensor, but so fat, we can't really rely on it unless we have (1 mm thick, white, cut though whole sheets)
+		Error & accuracy with 0.8mm slot = ??
+	6. Latency calculations, US sampling and averaging call costs about (9 - 17) ms depending on the Distance. 
+	7. I did some further search for a doppler effect radar sensor (we had discussed this before) the only usable sensor 
+	   I found another module in addition to the one that I showed before, was Very noisy, huge, requires a HW filter, and sofrware filter. (HB100)
+	8. Port my previous PWM driver from ESP-IDF and use it in Arduino framework.
+	9. Compile the first version of the Code successfully
+========================================
+Remaining tasks for a complete platform: shall be finished by 23.04.2021 - (26.04 - 21.05) - Monday & Friday
+	* Core and basic tasks: 
+		1. Complete 3rd vehicle's software code. (100%)
+		2. Finish prototype car assembly. (85%)
+		3. Assemble the other 3 cars without the IR sensor until it has been confirmed as a working method (0%) -> We should define a fixed time for this one to get it done
+			*Till now I wasn't able to test it in the designated conditions" 
+		4. Implement Station MCU code for data logging and platform remote control. (0%)
+	* Additional tasks and features:
+		1. Test the Laser sensor when it arrives, and finally decide for a speed measurement sensor and assemble it on the 4 vehicles.
+		2. Implement a python code for cloud data parsing. 
+		3. Add additional compiler flags for the building environment. 
+		4. Impelement Time sync method locally or using NTP server and replace millis() with Synced time in CAM msg.
+		5. Documentation preparation + git update + add PlatformIO building environment as an alternative to arduino env. 
+========================================
+	* Future tasks for the next person, or as thesis:
+		1. Evaluate the complete platform (CACC evaluation).
+		2. Adapt Extended Klamna Filter (EKF) and compare it with my averaging method. 
+		3. CACC different control methods implementation and evaluation.
+========================================================================================================================
+
+1. Averaging methods:
+	|						 A1
+	|                V1				V2
+	|									d7	d8 d9
+	|					d4	d5	d6		
+	|	d1	d2	d3					
+	|_____________________________________________
+	0	t1	t2	t3		t4	t5	t6		t7	t8	t9	17 ms
+	Method 1:
+	Step 0:
+	__
+	d1,t1|						
+	d2,t2| (d_av_0,t_av_0) ---|
+	d3,t3|					  |
+	__   					  |
+	Step 1					  |==> V1, T1
+	__						  |		|	
+	d4,t4|					  |		|
+	d5,t5| (d_av_1,t_av_1) ---|		| ==> A1
+	d6,t6|					  |		|
+	__					  	  |		|
+							  |		|
+	Step 2					  |==> V2, T2 
+	__					  	  |
+	d7,t7|					  |
+	d8,t8| (d_av_2,t_av_2) ---|
+	d9,t9|
+	__
+	Method 2:
+	|						 		
+	|                																						A1					
+	|																	V1									V2		
+	|					d_av											d_av
+	|	d1	d2	d3	d4	d5	d6	d7	d8 d9			d1	d2	d3	d4	d5	d6	d7	d8 d9		d1	d2	d3	d4	d5	d6	d7	d8 d9				
+	|_______________________________________________________________________________________________________________________________________
+		t1	t2	t3	t4	t5	t6	t7	t8	t9			t1	t2	t3	t4	t5	t6	t7	t8	t9		t1	t2	t3	t4	t5	t6	t7	t8	t9
+
+	Take 9 points -> average, calculate velocity&acceleration based on diff between each US iteration (i.e., every 13 ms approx.) (first 3 ierations will be garbage values.
+	** Final result: Done approx. every 20 ms
+		Average latency between each step (3 - 4) ms
+		Distance? Either average all 9 points (which are taken in aprrox. 7 ms } or average the last 3 points {interval of approx. 3 ms)
+		Velocity calculated and averaged from 2 points (V,V2)
+		Velocity calculated from 1 point
+		==> Additional we can make a ring buffer (I am not sure about the increase in latency)
+		
+		
+2. Time sync:
+	Logger --> connects to ntp server and gets current time|
+														   |
+														   |				  msg content:{flag + time}
+														   | --> send control msg to leader|
+																						   |
+																						   |--> Leader broadcast it's current time to platoon member. {some correlations and sync methods
+																																					   must be done at this point}
+3. Remote control: the flag part of the conrtol msg:
+		Could be:
+			1. Start
+			2. Stop
+			3. ACC
+			4. CACC
+			etc... 

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"iterator": "cpp",
+			"platoon_pwm_driver.h": "c"
+		}
+	}
+}

@@ -1,0 +1,29 @@
+15:56:59 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test.elf
+ 
+arm-none-eabi-objdump -h -S  Test.elf  > "Test.list"
+arm-none-eabi-objcopy  -O binary  Test.elf  "Test.bin"
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9664	    120	   1752	  11536	   2d10	Test.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test.bin
+ 
+Finished building: Test.list
+ 
+
+15:57:00 Build Finished. 0 errors, 2 warnings. (took 1s.18ms)
+

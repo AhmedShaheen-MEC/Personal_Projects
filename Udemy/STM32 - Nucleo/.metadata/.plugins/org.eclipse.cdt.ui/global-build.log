@@ -1,0 +1,815 @@
+15:16:07 **** Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -c -x assembler-with-cpp --specs=nano.specs -mfloat-abi=soft -mthumb -o "Startup/startup_stm32f446retx.o" "../Startup/startup_stm32f446retx.s"
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+arm-none-eabi-gcc "../Inc/Src/stm32f446x_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Inc/Src/stm32f446x_gpio_driver.d" -MT"Inc/Src/stm32f446x_gpio_driver.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Inc/Src/stm32f446x_gpio_driver.o"
+arm-none-eabi-gcc "../Inc/Src/stm32f446x_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Inc/Src/stm32f446x_spi_driver.d" -MT"Inc/Src/stm32f446x_spi_driver.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Inc/Src/stm32f446x_spi_driver.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:225:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test.elf
+ 
+arm-none-eabi-size   Test.elf 
+arm-none-eabi-objdump -h -S  Test.elf  > "Test.list"
+arm-none-eabi-objcopy  -O binary  Test.elf  "Test.bin"
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test.bin
+ 
+Finished building: Test.list
+ 
+15:16:33 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:17:10 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:225:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test.elf
+ 
+arm-none-eabi-objdump -h -S  Test.elf  > "Test.list"
+arm-none-eabi-objcopy  -O binary  Test.elf  "Test.bin"
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test.bin
+ 
+Finished building: Test.list
+ 
+15:17:39 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:225:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test.elf
+ 
+arm-none-eabi-objdump -h -S  Test.elf  > "Test.list"
+arm-none-eabi-objcopy  -O binary  Test.elf  "Test.bin"
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+Finished building: Test.bin
+ 
+ 
+Finished building: Test.list
+ 
+15:18:41 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:21:23 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:22:18 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:26:03 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:31:09 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:32:15 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:33:46 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:38:36 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:41:56 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:42:37 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:44:22 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:45:41 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Inc/Src/stm32f446x_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Inc/Src/stm32f446x_spi_driver.d" -MT"Inc/Src/stm32f446x_spi_driver.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Inc/Src/stm32f446x_spi_driver.o"
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test.elf
+ 
+arm-none-eabi-objdump -h -S  Test.elf  > "Test.list"
+arm-none-eabi-objcopy  -O binary  Test.elf  "Test.bin"
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test.bin
+ 
+Finished building: Test.list
+ 
+15:45:44 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8936	    120	   1752	  10808	   2a38	Test.elf
+Finished building: default.size.stdout
+ 
+15:50:19 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0))
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:233:3: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   commandcode = COMMAND_LED_READ;
+   ^~~~~~~~~~~
+   command_code
+../Src/006SPI_FD_M_S.c:233:3: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:236:16: error: 'SPI2' undeclared (first use in this function)
+   SPI_SendData(SPI2, &commandcode, 1);
+                ^~~~
+../Src/006SPI_FD_M_S.c:239:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(SPI2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:242:23: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+   SPI_SendData(SPI2, &dummy_write, 1);
+                       ^~~~~~~~~~~
+                       dummy_byte
+../Src/006SPI_FD_M_S.c:245:26: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(SPI2, &ackbyte, 1);
+                          ^~~~~~~
+../Src/006SPI_FD_M_S.c:247:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(ackbyte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:344:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG))
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:344:34: error: 'SPI_BUSY_FLAG' undeclared (first use in this function); did you mean 'SPI_BUSY_IN_RX'?
+   while (SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG))
+                                  ^~~~~~~~~~~~~
+                                  SPI_BUSY_IN_RX
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(SPI2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+../Src/006SPI_FD_M_S.c:352:2: error: expected declaration or statement at end of input
+  }
+  ^
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:50:40 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0))
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:233:3: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   commandcode = COMMAND_LED_READ;
+   ^~~~~~~~~~~
+   command_code
+../Src/006SPI_FD_M_S.c:233:3: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:236:16: error: 'SPI2' undeclared (first use in this function)
+   SPI_SendData(SPI2, &commandcode, 1);
+                ^~~~
+../Src/006SPI_FD_M_S.c:239:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(SPI2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:242:23: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+   SPI_SendData(SPI2, &dummy_write, 1);
+                       ^~~~~~~~~~~
+                       dummy_byte
+../Src/006SPI_FD_M_S.c:245:26: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(SPI2, &ackbyte, 1);
+                          ^~~~~~~
+../Src/006SPI_FD_M_S.c:247:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(ackbyte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:344:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:344:34: error: 'SPI_BUSY_FLAG' undeclared (first use in this function); did you mean 'SPI_BUSY_IN_RX'?
+   while (SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
+                                  ^~~~~~~~~~~~~
+                                  SPI_BUSY_IN_RX
+../Src/006SPI_FD_M_S.c:347:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(SPI2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+../Src/006SPI_FD_M_S.c:351:2: error: expected declaration or statement at end of input
+  }
+  ^
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:51:00 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:232:3: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   commandcode = COMMAND_LED_READ;
+   ^~~~~~~~~~~
+   command_code
+../Src/006SPI_FD_M_S.c:232:3: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:235:16: error: 'SPI2' undeclared (first use in this function)
+   SPI_SendData(SPI2, &commandcode, 1);
+                ^~~~
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(SPI2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:241:23: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+   SPI_SendData(SPI2, &dummy_write, 1);
+                       ^~~~~~~~~~~
+                       dummy_byte
+../Src/006SPI_FD_M_S.c:244:26: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(SPI2, &ackbyte, 1);
+                          ^~~~~~~
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(ackbyte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:343:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:343:34: error: 'SPI_BUSY_FLAG' undeclared (first use in this function); did you mean 'SPI_BUSY_IN_RX'?
+   while (SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
+                                  ^~~~~~~~~~~~~
+                                  SPI_BUSY_IN_RX
+../Src/006SPI_FD_M_S.c:346:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(SPI2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:52:17 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:235:16: error: 'SPI2' undeclared (first use in this function)
+   SPI_SendData(SPI2, &command_code, 1);
+                ^~~~
+../Src/006SPI_FD_M_S.c:235:16: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(SPI2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(response_byte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:259:24: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+    SPI_SendData(SPI2, &dummy_write, 1);
+                        ^~~~~~~~~~~
+                        dummy_byte
+../Src/006SPI_FD_M_S.c:276:3: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   commandcode = COMMAND_PRINT;
+   ^~~~~~~~~~~
+   command_code
+../Src/006SPI_FD_M_S.c:288:26: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(SPI2, &ackbyte, 1);
+                          ^~~~~~~
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(SPI2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(SPI2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:53:09 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(response_byte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:259:29: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+    SPI_SendData(HAL_SPI_2, &dummy_write, 1);
+                             ^~~~~~~~~~~
+                             dummy_byte
+../Src/006SPI_FD_M_S.c:259:29: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:276:3: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   commandcode = COMMAND_PRINT;
+   ^~~~~~~~~~~
+   command_code
+../Src/006SPI_FD_M_S.c:288:31: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(HAL_SPI_2, &ackbyte, 1);
+                               ^~~~~~~
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:53:24 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(response_byte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:276:3: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   commandcode = COMMAND_PRINT;
+   ^~~~~~~~~~~
+   command_code
+../Src/006SPI_FD_M_S.c:276:3: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:285:28: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+   SPI_SendData(HAL_SPI_2, &dummy_write, 1);
+                            ^~~~~~~~~~~
+                            dummy_byte
+../Src/006SPI_FD_M_S.c:288:31: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(HAL_SPI_2, &ackbyte, 1);
+                               ^~~~~~~
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:53:51 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(response_byte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:279:28: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   SPI_SendData(HAL_SPI_2, &commandcode, 1);
+                            ^~~~~~~~~~~
+                            command_code
+../Src/006SPI_FD_M_S.c:279:28: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:321:28: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+   SPI_SendData(HAL_SPI_2, &dummy_write, 1);
+                            ^~~~~~~~~~~
+                            dummy_byte
+../Src/006SPI_FD_M_S.c:324:31: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(HAL_SPI_2, &ackbyte, 1);
+                               ^~~~~~~
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:53:59 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(response_byte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:312:3: error: 'commandcode' undeclared (first use in this function); did you mean 'command_code'?
+   commandcode = COMMAND_ID_READ;
+   ^~~~~~~~~~~
+   command_code
+../Src/006SPI_FD_M_S.c:312:3: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:321:28: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+   SPI_SendData(HAL_SPI_2, &dummy_write, 1);
+                            ^~~~~~~~~~~
+                            dummy_byte
+../Src/006SPI_FD_M_S.c:324:31: error: 'ackbyte' undeclared (first use in this function)
+   SPI_ReceiveData(HAL_SPI_2, &ackbyte, 1);
+                               ^~~~~~~
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:54:18 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(response_byte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:334:30: error: 'dummy_write' undeclared (first use in this function); did you mean 'dummy_byte'?
+     SPI_SendData(HAL_SPI_2, &dummy_write, 1);
+                              ^~~~~~~~~~~
+                              dummy_byte
+../Src/006SPI_FD_M_S.c:334:30: note: each undeclared identifier is reported only once for each function it appears in
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:54:25 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:246:7: warning: implicit declaration of function 'SPI_VerifyResponse'; did you mean 'SPI_VerifyResp'? [-Wimplicit-function-declaration]
+   if (SPI_VerifyResponse(response_byte)) {
+       ^~~~~~~~~~~~~~~~~~
+       SPI_VerifyResp
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Src/006SPI_FD_M_S.o: In function `main':
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:227: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:238: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:244: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:246: undefined reference to `SPI_VerifyResponse'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:253: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:262: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:270: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:282: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:288: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:291: undefined reference to `SPI_VerifyResponse'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:306: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:318: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:324: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:328: undefined reference to `SPI_VerifyResponse'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:335: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:345: undefined reference to `SPI_GetFlagStatus'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:348: undefined reference to `SPI_PeripheralControl'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:44: Test.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:55:06 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:328:7: error: stray '`' in program
+   if (`(response_byte))
+       ^
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+make: *** [Src/subdir.mk:18: Src/006SPI_FD_M_S.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:55:10 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:238:3: warning: implicit declaration of function 'SPI_ReceiveData'; did you mean 'SPI_ReveiveData'? [-Wimplicit-function-declaration]
+   SPI_ReceiveData(HAL_SPI_2, &dummy_read, 1);
+   ^~~~~~~~~~~~~~~
+   SPI_ReveiveData
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Src/006SPI_FD_M_S.o: In function `main':
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:227: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:238: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:244: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:253: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:262: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:270: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:282: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:288: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:306: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:318: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:324: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:335: undefined reference to `SPI_ReceiveData'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:345: undefined reference to `SPI_GetFlagStatus'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:348: undefined reference to `SPI_PeripheralControl'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:44: Test.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:55:33 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:227:11: warning: implicit declaration of function 'GPIO_ReadFromInputPin'; did you mean 'GPIO_ReadInputPin'? [-Wimplicit-function-declaration]
+   while (!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+           ^~~~~~~~~~~~~~~~~~~~~
+           GPIO_ReadInputPin
+../Src/006SPI_FD_M_S.c:345:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:348:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Src/006SPI_FD_M_S.o: In function `main':
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:227: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:270: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:306: undefined reference to `GPIO_ReadFromInputPin'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:345: undefined reference to `SPI_GetFlagStatus'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:348: undefined reference to `SPI_PeripheralControl'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:44: Test.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:56:04 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:344:10: warning: implicit declaration of function 'SPI_GetFlagStatus' [-Wimplicit-function-declaration]
+   while (SPI_GetFlagStatus(HAL_SPI_2, SPI_SR_BSY));
+          ^~~~~~~~~~~~~~~~~
+../Src/006SPI_FD_M_S.c:347:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Src/006SPI_FD_M_S.o: In function `main':
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:344: undefined reference to `SPI_GetFlagStatus'
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:347: undefined reference to `SPI_PeripheralControl'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:44: Test.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:56:33 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c:347:3: warning: implicit declaration of function 'SPI_PeripheralControl'; did you mean 'SPI_PeriClockControl'? [-Wimplicit-function-declaration]
+   SPI_PeripheralControl(HAL_SPI_2, DISABLE);
+   ^~~~~~~~~~~~~~~~~~~~~
+   SPI_PeriClockControl
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Src/006SPI_FD_M_S.o: In function `main':
+D:/Mechatronics_master/Second_semster/STM32 Course/Test/Debug/../Src/006SPI_FD_M_S.c:347: undefined reference to `SPI_PeripheralControl'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:44: Test.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+15:56:59 **** Incremental Build of configuration Debug for project Test ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/006SPI_FD_M_S.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"D:/Mechatronics_master/Second_semster/STM32 Course/Test/Inc/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/006SPI_FD_M_S.d" -MT"Src/006SPI_FD_M_S.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/006SPI_FD_M_S.o"
+../Src/006SPI_FD_M_S.c: In function 'main':
+../Src/006SPI_FD_M_S.c:222:33: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint8_t * {aka unsigned char *}' [-Wformat=]
+    printf("COMMAND_SENSOR_READ %d\n", &analog_data);
+                                ~^     ~~~~~~~~~~~~
+                                %hhn
+../Src/006SPI_FD_M_S.c: In function 'SPI2_Init':
+../Src/006SPI_FD_M_S.c:97:12: warning: 'spi2Handle.SPIx_Config' is used uninitialized in this function [-Wuninitialized]
+  spi2Handle.SPIx_Config->SPI_BusConfig = SPI_BUS_CONFIG_FD;
+  ~~~~~~~~~~^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test.elf
+ 
+arm-none-eabi-objdump -h -S  Test.elf  > "Test.list"
+arm-none-eabi-objcopy  -O binary  Test.elf  "Test.bin"
+arm-none-eabi-size   Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9664	    120	   1752	  11536	   2d10	Test.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test.bin
+ 
+Finished building: Test.list
+ 

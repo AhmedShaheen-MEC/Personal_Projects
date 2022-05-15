@@ -1,0 +1,21 @@
+16:06:11 **** Incremental Build of configuration Debug for project 001_Hello_world ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc -o "001_Hello_world.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Mechatronics_master\Second_semster\STM32 Course\001_Hello_world\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001_Hello_world.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001_Hello_world.elf
+ 
+arm-none-eabi-objdump -h -S  001_Hello_world.elf  > "001_Hello_world.list"
+arm-none-eabi-objcopy  -O binary  001_Hello_world.elf  "001_Hello_world.bin"
+arm-none-eabi-size   001_Hello_world.elf 
+   text	   data	    bss	    dec	    hex	filename
+   4964	    108	   1580	   6652	   19fc	001_Hello_world.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001_Hello_world.bin
+ 
+Finished building: 001_Hello_world.list
+ 
+
+16:06:20 Build Finished. 0 errors, 0 warnings. (took 8s.314ms)
+

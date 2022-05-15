@@ -1,0 +1,53 @@
+/*
+Theme Name: Spacious Child Theme 2
+Theme URI: http://themegrill.com/themes/spacious/
+Description: Spacious Child Theme 2
+Author: ThemeGrill
+Author URI: http://themegrill.com
+Template: spacious
+Version: 1.0
+*/
+
+@import url("../spacious/style.css");
+
+/* =Theme customization starts here
+------------------------------------------------------- */
+.youtube-image {
+        position: relative;
+        padding-bottom: 56.23%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+        margin: 5px;
+    }
+
+.youtube-image img {
+  bottom: 0;
+  display: block;
+  left: 0;
+  margin: auto;
+  max-width: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: none;
+  height: auto;
+  cursor: pointer;
+  -webkit-transition: .4s all;
+  -moz-transition: .4s all;
+  transition: .4s all;
+}
+
+.youtube-image img:hover {
+  -webkit-filter: brightness(75%);
+}
+
+#menu-item-6217 a{
+color: #0000ff;
+}
+#menu-item-6218 a{
+color: #ff0000;
+}
+
