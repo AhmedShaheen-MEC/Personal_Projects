@@ -1,0 +1,11 @@
+[Unit]
+Description=Setup VBAN receptor Service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/sound.sh
+TimeoutStopSec=infinity
+
+[Install]
+WantedBy=multi-user.target
