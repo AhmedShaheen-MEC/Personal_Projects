@@ -1,0 +1,11 @@
+[Unit]
+Description=Network Self Healing Service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/self_healing.sh
+TimeoutStopSec=infinity
+
+[Install]
+WantedBy=multi-user.target

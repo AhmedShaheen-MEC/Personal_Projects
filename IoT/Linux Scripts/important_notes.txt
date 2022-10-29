@@ -1,0 +1,6 @@
+service path:/etc/systemd/system
+
+cmds:
+systemctl daemon-reload
+systemctl start network_self_healing.service 
+systemctl start network_self_healing.timer
