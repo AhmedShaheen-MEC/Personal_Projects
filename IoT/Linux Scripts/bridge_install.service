@@ -1,0 +1,11 @@
+[Unit]
+Description=VPNBride Setup Service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/shaheen/3es_scripts/network-bridge-setup.sh
+TimeoutStopSec=infinity
+
+[Install]
+WantedBy=multi-user.target
